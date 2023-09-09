@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var isNight = false
+    
     var body: some View {
         ZStack {
-            BackgroundView(topColor: .blue, bottomColor: Color("lightBlue"))
+            BackgroundView(isNight: $isNight)
             
             VStack {
                 CityTextView(cityName: "Cupertino, CA")
-                mainWeatherStatusView(imageName: "cloud.sun.fill", temperature: 76)
+                mainWeatherStatusView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill", temperature: 76)
                 
                 HStack(spacing: 20) {
                     WeatherDayView(dayOfWeak: "TUE", imageName: "cloud.sun.fill", temperature: 74)
@@ -26,7 +29,7 @@ struct ContentView: View {
                 Spacer()
                 
                 Button {
-                    print("tapped")
+                    isNight.toggle()
                 } label: {
                     WeatherButton(title: "Change Day Time", textColor: .blue, backgroundColor: .white)
                 }
@@ -67,11 +70,10 @@ struct WeatherDayView: View {
 
 struct BackgroundView: View {
     
-    var topColor: Color
-    var bottomColor: Color
+    @Binding var isNight: Bool
     
     var body: some View {
-        LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]),
+        LinearGradient(gradient: Gradient(colors: [isNight ? .black : .blue, isNight ? .gray : Color("lightBlue")]),
                        startPoint: .topLeading,
                        endPoint: .bottomTrailing)
         .edgesIgnoringSafeArea(.all)
@@ -108,22 +110,5 @@ struct mainWeatherStatusView: View {
                 .foregroundColor(.white)
         }
         .padding(.bottom, 40)
-    }
-}
-
-struct WeatherButton: View {
-    
-    var title: String
-    var textColor: Color
-    var backgroundColor: Color
-    
-    var body: some View {
-        Text(title)
-            .frame(width: 280, height: 50)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
-            .font(.system(size: 20, weight: .bold))
-            .cornerRadius(10)
-            .shadow(radius: 10)
     }
 }
