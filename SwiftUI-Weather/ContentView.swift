@@ -10,6 +10,11 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var isNight = false
+    let weather = [Weather(dayOfWeak: "TUE", imageName: "cloud.sun.fill", temperature: 74),
+                   Weather(dayOfWeak: "WED", imageName: "sun.max.fill", temperature: 88),
+                   Weather(dayOfWeak: "THU", imageName: "wind.snow", temperature: 55),
+                   Weather(dayOfWeak: "FRI", imageName: "sunset.fill", temperature: 60),
+                   Weather(dayOfWeak: "SAT", imageName: "snow", temperature: 25)]
     
     var body: some View {
         ZStack {
@@ -20,11 +25,10 @@ struct ContentView: View {
                 mainWeatherStatusView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill", temperature: 76)
                 
                 HStack(spacing: 20) {
-                    WeatherDayView(dayOfWeak: "TUE", imageName: "cloud.sun.fill", temperature: 74)
-                    WeatherDayView(dayOfWeak: "WED", imageName: "sun.max.fill", temperature: 88)
-                    WeatherDayView(dayOfWeak: "THU", imageName: "wind.snow", temperature: 55)
-                    WeatherDayView(dayOfWeak: "FRI", imageName: "sunset.fill", temperature: 60)
-                    WeatherDayView(dayOfWeak: "SAT", imageName: "snow", temperature: 25)
+                    
+                    ForEach(weather, id: \.self) { weather in
+                        WeatherDayView(dayOfWeak: weather.dayOfWeak, imageName: weather.imageName, temperature: weather.temperature)
+                    }
                 }
                 Spacer()
                 
