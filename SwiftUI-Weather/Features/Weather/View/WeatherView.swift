@@ -18,7 +18,7 @@ struct WeatherView: View {
             
             
             if vm.weatherData != nil {
-                ExtractedView(weather: vm.weatherData!)
+                WeatherStatusView(weather: vm.weatherData!)
             }
         }
         .task {
@@ -41,7 +41,7 @@ struct BackgroundView2: View {
     }
 }
 
-struct ExtractedView: View {
+struct WeatherStatusView: View {
     
     let weather: Weather2
     
