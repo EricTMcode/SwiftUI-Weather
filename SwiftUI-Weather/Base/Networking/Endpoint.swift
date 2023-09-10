@@ -49,7 +49,8 @@ extension Endpoint {
         urlComponents.host = host
         urlComponents.path = path
         
-        let staticQueryItems = [URLQueryItem(name: "appid", value: "fd6e851964b08e0568183d2a7c65793b")]
+        let staticQueryItems = [URLQueryItem(name: "appid", value: "fd6e851964b08e0568183d2a7c65793b"),
+                                URLQueryItem(name: "units", value: "metric")]
         
         let requestQueryItems = queryItems.compactMap { item in
             URLQueryItem(name: item.key, value: item.value)

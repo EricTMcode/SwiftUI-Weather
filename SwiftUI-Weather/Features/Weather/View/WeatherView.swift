@@ -13,10 +13,12 @@ struct WeatherView: View {
     let lon: Double
     
     var body: some View {
-        VStack {
+        ZStack {
+            BackgroundView2()
+            
+            
             if vm.weatherData != nil {
-                Text(vm.weatherData!.name)
-                Text("\(vm.weatherData!.main.temp)")
+                ExtractedView(weather: vm.weatherData!)
             }
         }
         .task {
@@ -28,5 +30,42 @@ struct WeatherView: View {
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
         WeatherView(lat: 37.32, lon: -122.03)
+    }
+}
+
+struct BackgroundView2: View {
+    
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [.blue, Color("lightBlue")]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct ExtractedView: View {
+    
+    let weather: Weather2
+    
+    var body: some View {
+        VStack {
+            Text(weather.name)
+                .font(.system(size: 32, weight: .medium))
+                .foregroundColor(.white)
+                .padding()
+            
+            VStack(spacing: 10) {
+                ForEach(weather.weather) { weather in
+                    Image(systemName: weather.iconImage)
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 180, height: 180)
+                }
+                
+                Text("\(weather.main.tempText)°c")
+                    .font(.system(size: 60, weight: .medium))
+                    .foregroundColor(.white)
+            }
+            Spacer()
+        }
     }
 }

@@ -27,11 +27,17 @@ struct Weather2: Codable {
     let lat: Double
   }
 
-  struct Weather: Codable {
+  struct Weather: Codable, Identifiable {
     let id: Int
     let main: String
     let description: String
     let icon: String
+      
+      var iconImage: String {
+          if icon == "04n" {
+          }
+          return "smoke.fill"
+      }
   }
 
   struct Main: Codable {
@@ -50,6 +56,10 @@ struct Weather2: Codable {
       case pressure
       case humidity
     }
+      
+      var tempText: Int {
+          return Int(temp.rounded())
+      }
   }
 
   struct Wind: Codable {
